@@ -5,3 +5,15 @@
 **思路:**使用ftp将本地bak文件上传至远端服务器 使用freetds连接远端SQLServer服务 执行脚本还原数据库 远端需要有ftp服务作为支撑
 
 **依赖关系:**  brew install jq freetds
+
+示例1：</br>
+
+restore localxp test.bak
+
+将本地文件test.bak上传到localxp所指向的服务器上，然后进行还原操作
+
+示例2：</br>
+
+restore localxp test.bak test1
+
+将本地文件test.bak上传到localxp所指向的服务器上，然后进行还原操作，并将数据库名称指定为test1
