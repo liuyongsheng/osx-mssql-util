@@ -1,0 +1,11 @@
+{
+	"bakPath": "/Users/liuys/Public/SqlServerBak",
+    "localxp": {
+        "sqladminname": "sa",
+        "sqladminpass": "123456",
+        "sqldatapath": "C:\\SQLSERVERDATA",
+		"databakpath": "C:\\SQLSERVERDATA\\backup",
+		"ftpuser": "username",
+		"ftppass": "password"
+    }
+}
