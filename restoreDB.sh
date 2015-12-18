@@ -84,6 +84,7 @@ exDatabaseName(){
 # 执行强制还原数据库
 retoreDB(){
 	tmpDataName=$dataBaseName
+	tmpLogName=$dataBaseName'_log'
 	if [ -n "$3" ]
 	then 
 		tmpDataName=$3
