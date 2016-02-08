@@ -158,7 +158,7 @@ downbakfile(){
 		get /$2.$bakfile $2.$bakfile
 		quit
 EOF
-	mv $sqlutil/$2.$bakfile $bakPath/$2.$bakfile
+	mv $2.$bakfile $bakPath/$2.$bakfile
 }
 
 #执行文件备份业务 
