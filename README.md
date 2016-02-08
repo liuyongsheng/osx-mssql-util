@@ -11,7 +11,7 @@
 ```bash
 restore localwin test.bak
 ```
-将本地文件test.bak上传到localxp所指向的服务器上，然后进行还原操作
+将本地文件test.bak上传到localwin所指向的服务器上，然后进行还原操作
 
 示例2：</br>
 
@@ -19,7 +19,7 @@ restore localwin test.bak
 re localwin test.bak test1
 ```
 
-将本地文件test.bak上传到localxp所指向的服务器上，然后进行还原操作，并将数据库名称指定为test1
+将本地文件test.bak上传到localwin所指向的服务器上，然后进行还原操作，并将数据库名称指定为test1
 
 示例3：</br>
 
