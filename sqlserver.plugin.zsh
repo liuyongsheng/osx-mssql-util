@@ -8,3 +8,5 @@ alias re='restore'
 
 alias backup='sh $sqlutil/sqlserver.sh bk '
 alias bk='backup'
+
+alias sql='sh $sqlutil/sqlserver.sh sql '

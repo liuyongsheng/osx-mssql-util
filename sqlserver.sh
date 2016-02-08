@@ -171,6 +171,13 @@ exebakupdb(){
 	downbakfile $1 $2 $3
 }
 
+#执行sql语句
+exesql(){
+	if [ $1".foo" != ".foo" ];then
+		tsql -S $1 -U $(sqlserveruser $1) -P $(sqlserverpass $1) 2>&1
+	fi
+}
+
 # 业务控制 执行还原数据库和备份数据库
 action(){
 	if [ $1".foo" == "re.foo" ];then
@@ -178,6 +185,9 @@ action(){
 	fi
 	if [ $1".foo" == "bk.foo" ];then 
 		exebakupdb $2 $3 $4
+	fi
+	if [ $1".foo" == "sql.foo" ];then 
+		exesql $2
 	fi
 }
 
