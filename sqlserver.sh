@@ -2,10 +2,10 @@
 sqlutil=$(cd `dirname $0`; pwd)
 bakPath=~/Public/SqlServerBak
 configfile=$sqlutil/sqlserver.conf
-#±¸·İÎÄ¼şºó×º
+#å¤‡ä»½æ–‡ä»¶åç¼€
 bakfile=localbak.bak
 
-# »ñÈ¡sqlserverÓÃ»§Ãû
+# è·å–sqlserverç”¨æˆ·å
 sqlserveruser(){
 	cat $configfile | awk '$1=='\"$1\"' {print $2}'
 }
@@ -30,7 +30,7 @@ ftppass(){
 	cat $configfile | awk '$1=='\"$1\"' {print $7}'
 }
 
-# ÁĞ³öÔ¶³Ì·ûºÏÌõ¼şµÄÎÄ¼şĞÅÏ¢
+# åˆ—å‡ºè¿œç¨‹ç¬¦åˆæ¡ä»¶çš„æ–‡ä»¶ä¿¡æ¯
 listfile(){
 	ftp -n $1<<EOF
 		quote USER $(ftpuser $1)
@@ -40,17 +40,17 @@ listfile(){
 EOF
 }
 
-# Ô¶³ÌÎÄ¼ş´óĞ¡
+# è¿œç¨‹æ–‡ä»¶å¤§å°
 remotefilesize(){
 	echo $(listfile $1 $2) | awk '{print $5}'
 }
 
-# ±¾µØÎÄ¼ş´óĞ¡
+# æœ¬åœ°æ–‡ä»¶å¤§å°
 localfilesize(){
 	ls -l $bakPath/$2 | awk '{print $5}'
 }
 
-#ÉÏ´«ÎÄ¼ş Èç¹ûÔ¶³ÌÒÑ¾­ÓĞÁË²¢ÇÒ´óĞ¡Ò»Ñù Ôò²»ÉÏ´«
+#ä¸Šä¼ æ–‡ä»¶ å¦‚æœè¿œç¨‹å·²ç»æœ‰äº†å¹¶ä¸”å¤§å°ä¸€æ · åˆ™ä¸ä¸Šä¼ 
 uploadFile(){
 	ftp -n $1<<EOF
 		quote USER $(ftpuser $1)
@@ -62,7 +62,7 @@ uploadFile(){
 EOF
 }
 
-# Ö´ĞĞÊı¾İ¿âÓï¾ä£¨²éÑ¯±¸·İÎÄ¼şĞÅÏ¢£©
+# æ‰§è¡Œæ•°æ®åº“è¯­å¥ï¼ˆæŸ¥è¯¢å¤‡ä»½æ–‡ä»¶ä¿¡æ¯ï¼‰
 databasename(){
 	pre_sql="RESTORE FILELISTONLY FROM DISK = '$(defaultbakpath $1)\\$2'"
 	tsql -S $1 -U $(sqlserveruser $1) -P $(sqlserverpass $1)<<EOF
@@ -72,12 +72,12 @@ exit
 EOF
 }
 
-# ÁĞ³ö±¸·İÎÄ¼şµÄÕæÊµÊı¾İ¿âÃû³Æ
+# åˆ—å‡ºå¤‡ä»½æ–‡ä»¶çš„çœŸå®æ•°æ®åº“åç§°
 realdatabasename(){
 	echo `databasename $1 $2 | awk 'BEGIN{FS="\t"} $2 ~ /.mdf/ || $2 ~ /.ldf/ {print $1}'`
 }
 
-# Ö´ĞĞÇ¿ÖÆ»¹Ô­Êı¾İ¿â
+# æ‰§è¡Œå¼ºåˆ¶è¿˜åŸæ•°æ®åº“
 retoredb(){
 	databaseinfo=$(realdatabasename $1 $2)
 	dataBaseName=`echo $databaseinfo | awk '{print $1}'`
@@ -98,7 +98,7 @@ exit
 EOF
 }
 
-#Ö´ĞĞ²ÎÊıĞ£Ñé ±¾µØÎÄ¼şºÍÔ¶³ÌÎÄ¼şĞ£Ñé ²¢ÇÒÖ´ĞĞ»¹Ô­Êı¾İ¿â
+#æ‰§è¡Œå‚æ•°æ ¡éªŒ æœ¬åœ°æ–‡ä»¶å’Œè¿œç¨‹æ–‡ä»¶æ ¡éªŒ å¹¶ä¸”æ‰§è¡Œè¿˜åŸæ•°æ®åº“
 exeretoredb(){
 	echo "Validation params......"
 	validation $1 $2 $3
@@ -113,7 +113,7 @@ exeretoredb(){
 	retoredb $1 $2 $3 | awk 'FS="\"" {if($2!="")print $2}' | awk '$1=="Database"||$2=="DATABASE" {print $0}'
 }
 
-# ÑéÖ¤²ÎÊıÕıÈ·ĞÔ
+# éªŒè¯å‚æ•°æ­£ç¡®æ€§
 validation(){
 	if [ $1".foo" == ".foo" ];then
 		return 1
@@ -129,7 +129,7 @@ validation(){
 }
 
 
-# Ö´ĞĞÊı¾İ¿âÓï¾ä£¨Ö´ĞĞ±¸·İÊı¾İ¿â£©
+# æ‰§è¡Œæ•°æ®åº“è¯­å¥ï¼ˆæ‰§è¡Œå¤‡ä»½æ•°æ®åº“ï¼‰
 bakdatabase(){
 	pre_sql="backup database $2 to disk='$(defaultbakpath $1 )"\\"$2.$bakfile'"
 	tsql -S $1 -U $(sqlserveruser $1) -P $(sqlserverpass $1) 2>&1 <<EOF>/dev/null
@@ -139,7 +139,7 @@ exit
 EOF
 }
 
-# É¾³ıÔ¶³ÌµÄ±¸·İÎÄ¼ş
+# åˆ é™¤è¿œç¨‹çš„å¤‡ä»½æ–‡ä»¶
 delremotefile(){
 	ftp -n $1<<EOF>>/dev/null
 		quote USER $(ftpuser $1)
@@ -150,7 +150,7 @@ delremotefile(){
 EOF
 }
 
-# ÏÂÔØÔ¶³Ì±¸·İµÄÎÄ¼ş ²¢ÇÒÒÆ¶¯µ½±¸·İÎÄ¼şÄ¿Â¼
+# ä¸‹è½½è¿œç¨‹å¤‡ä»½çš„æ–‡ä»¶ å¹¶ä¸”ç§»åŠ¨åˆ°å¤‡ä»½æ–‡ä»¶ç›®å½•
 downbakfile(){
 	ftp -n $1<<EOF>>/dev/null
 		quote USER $(ftpuser $1)
@@ -161,7 +161,7 @@ EOF
 	mv $2.$bakfile $bakPath/$2.$bakfile
 }
 
-#Ö´ĞĞÎÄ¼ş±¸·İÒµÎñ 
+#æ‰§è¡Œæ–‡ä»¶å¤‡ä»½ä¸šåŠ¡ 
 exebakupdb(){
 	echo "First delete remote file "$2.$bakfile
 	delremotefile $1 $2 $3
@@ -171,14 +171,14 @@ exebakupdb(){
 	downbakfile $1 $2 $3
 }
 
-#Ö´ĞĞsqlÓï¾ä
+#æ‰§è¡Œsqlè¯­å¥
 exesql(){
 	if [ $1".foo" != ".foo" ];then
 		tsql -S $1 -U $(sqlserveruser $1) -P $(sqlserverpass $1) 2>&1
 	fi
 }
 
-# ÒµÎñ¿ØÖÆ Ö´ĞĞ»¹Ô­Êı¾İ¿âºÍ±¸·İÊı¾İ¿â
+# ä¸šåŠ¡æ§åˆ¶ æ‰§è¡Œè¿˜åŸæ•°æ®åº“å’Œå¤‡ä»½æ•°æ®åº“
 action(){
 	if [ $1".foo" == "re.foo" ];then
 		exeretoredb $2 $3 $4
