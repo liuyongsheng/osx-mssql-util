@@ -110,7 +110,7 @@ exeretoredb(){
 		uploadFile $1 $2 | awk '{print "The bak file is '"$2"' "$8"-"$6"-"$7}'
 	fi 
 	echo "Start restore database......"
-	retoredb $1 $2 $3 | awk 'FS="\"" {if($2!="")print $2}' | awk '$1=="Database"||$2=="DATABASE" {print $0}'
+	retoredb $1 $2 $3 | awk 'FS="\"" {if($2!="")print $2}' | awk '$1=="Database"||$2=="DATABASE"||$1="RESTORE" {if($2!="") print $0}'
 }
 
 # 验证参数正确性
